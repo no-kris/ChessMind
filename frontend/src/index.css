@@ -11,8 +11,8 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
@@ -55,9 +55,6 @@
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
   box-sizing: border-box;
 }
 
@@ -92,4 +89,47 @@ h2 {
 }
 p {
   margin: 0;
+}
+
+.app-layout {
+  display: flex;
+  margin-top: 20px;
+}
+
+.board-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  width: 620px;
+  max-width: 90vw;
+}
+
+.coach-panel {
+  width: 320px;
+  border-left: 1px solid #ddd;
+  padding-top: 1rem;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .board-area {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .coach-panel {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #ddd;
+    margin: 0 auto;
+    max-height: 45vh;
+    overflow-y: auto;
+  }
 }
