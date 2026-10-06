@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.routes import router
+
 load_dotenv(override=True)
 
 app = FastAPI(
@@ -12,7 +14,9 @@ app = FastAPI(
     description="Backend API for creating REST requests to Stockfish engine and OpenAI SDK",
 )
 
-ORIGINS = os.getenv("origins", "http://localhost:8000")
+ORIGINS = [
+    o.strip() for o in os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,10 +27,9 @@ app.add_middleware(
 )
 
 
+app.include_router(router)
+
+
 @app.get("/")
 async def root():
     return {"message": "ChessMind API up and running."}
-
-@app.get("/analyze")
-async def analyze():
-    return {"message": "Frontend can talk to backend."}
