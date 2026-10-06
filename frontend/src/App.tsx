@@ -15,7 +15,9 @@ function App() {
       <aside className="coach-panel">
         <h2>Coach</h2>
         <p>No analysis yet.</p>
-        <button onClick={handleAnalyze}>Analyze</button>
+        <div>
+          <button onClick={handleAnalyze}>Analyze</button>
+        </div>
       </aside>
     </div>
   );
