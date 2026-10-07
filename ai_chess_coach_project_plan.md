@@ -23,8 +23,8 @@ The app is **session-only and stateless-by-design**: no user accounts, and nothi
 
 
 ### Phase 1: Python Backend & React Setup
-- [ ] Initialize repository structure with a Python backend (FastAPI/Flask) and React SPA frontend.
-- [ ] Install core backend dependencies (`python-chess`, engine drivers, HTTP client for custom LLM).
+- [x] Initialize repository structure with a Python backend (FastAPI/Flask) and React SPA frontend.
+- [x] Install core backend dependencies (`python-chess`, engine drivers, HTTP client for custom LLM).
 - [ ] Build Python REST API endpoints to accept moves from React and manage board state.
 - [ ] Implement FEN/PGN utilities for state synchronization between React client and Python server.
 - [ ] Maintain an **in-memory session game store** keyed by a session ID (created per game, dropped when the session ends). No database — nothing persists after the game.
