@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import router
 
-load_dotenv(override=True)
+load_dotenv()
 
 app = FastAPI(
     title="ChessMind backend API",

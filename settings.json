@@ -1,0 +1,18 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "/root/.claude/statusline.sh"
+  },
+  "permissions": {
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.local)",
+      "Edit(**/.env)",
+      "Edit(**/.env.local)",
+      "Bash(env)",
+      "Bash(printenv:*)",
+      "Edit(**/uv.lock)",
+      "Edit(**/package-lock.json)"
+    ]
+  }
+}
