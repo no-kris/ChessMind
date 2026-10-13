@@ -114,7 +114,7 @@ Definition of done:
 ### Results
 
 - Merge decision: Merged
-- Reason: The agent was successful at following the directions. It build a wrapper around getting a connection to the Stockfish chess engine and used that to create a function for getting the next top moves suggested by Stockfish. It wrote tests to make sure the connection was successful and a test case for creating a scenario where the board has a mate in one position. 
+- Reason: The agent was successful at following the directions. It build a wrapper around getting a connection to the Stockfish chess engine and used that to create a function for getting the next top moves suggested by Stockfish. It wrote tests to make sure the connection was successful and a test case for creating a scenario where the board has a mate in one position. It kept to the files it was tasked to write. This resulted in no merge conflicts when merging to the main repo. 
 - Commits on this branch:
 ```bash
 > git log --oneline main -5
