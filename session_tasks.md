@@ -11,7 +11,7 @@ Write two small functions that grade how good a chess move was, plus tests for t
    - eval_loss(best_cp, result_cp): how much the players postion worsens or improves after a move (measure in centipawns).
      - best_cp: score before the move, from the moving player's point of view.
      - result_cp: score after the move, from the opponent's point of view.
-     - Formula: max(0, best_cp - (-result_cp)). Never negative.
+     - Make sure the result is never negative.
    - bucket(delta): turns the loss into a label:
        under 30    = "good"
        30 to 99    = "inaccuracy"
@@ -46,6 +46,22 @@ Definition of done:
 - uv run pytest passes, including any pre-existing tests.
 - The expected values in the tests match the task exactly.
 - The agent ends with a short summary of what it did.
+
+
+### Results
+
+- Merge decision: Merged
+
+- Reason: The agent was successful at following the directions. It built the two functions I needed and tested the different edge cases. All conditions, score-flip, non-negative checks, and evalution score being mathed to the correct label were met. The agent stayed in it;s own files and no merge conflict occurred. 
+- Commits on this branch:
+```bash
+> git log --oneline main -5
+cd946b5 (HEAD -> main) Merge branch 'feature/engine'
+c1bcb53 Merge branch 'feature/classify'
+bf6facf (feature/engine) Added a function for starting the Stockfish chess engine, and an analyze function for getting the engines top suggested moves for a current position. Included tests to make sure the Stockfish engine could be read and it accurately returns a list of top moves to make.
+abf4503 (feature/classify) Added functions for calculating player position score and labeling it as either good, innacurate, mistake, or blunder.
+5e22a37 (origin/main) Update README.md
+```
 
 ## Session B
 
@@ -94,3 +110,17 @@ Definition of done:
 - analyse uses .pov(board.turn) and caps depth at 18.
 - Every test closes the engine (no leftover Stockfish processes: check with ps).
 - The agent ends with a short summary of what it did.
+
+### Results
+
+- Merge decision: Merged
+- Reason: The agent was successful at following the directions. It build a wrapper around getting a connection to the Stockfish chess engine and used that to create a function for getting the next top moves suggested by Stockfish. It wrote tests to make sure the connection was successful and a test case for creating a scenario where the board has a mate in one position. 
+- Commits on this branch:
+```bash
+> git log --oneline main -5
+cd946b5 (HEAD -> main) Merge branch 'feature/engine'
+c1bcb53 Merge branch 'feature/classify'
+bf6facf (feature/engine) Added a function for starting the Stockfish chess engine, and an analyze function for getting the engines top suggested moves for a current position. Included tests to make sure the Stockfish engine could be read and it accurately returns a list of top moves to make.
+abf4503 (feature/classify) Added functions for calculating player position score and labeling it as either good, innacurate, mistake, or blunder.
+5e22a37 (origin/main) Update README.md
+```
