@@ -4,7 +4,23 @@ version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi>=0.141.1",
+    "openai>=3.26.0",
     "python-chess>=1.999",
     "python-dotenv>=1.2.3",
     "uvicorn[standard]>=0.53.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+    "ruff>=0.16.10",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+markers = [
+    "engine: needs a Stockfish binary (STOCKFISH_PATH)",
+    "llm: calls a real LLM API (needs LLM_API_KEY)",
 ]
