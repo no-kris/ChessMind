@@ -22,14 +22,14 @@ docker build -t chessmind .
 ### 2. Run the container
 
 ```bash
-docker run -it --rm \
-  -v "$(PWD)":/workspace \
-  -v claude-auth:/claude-auth \
-  -v chessmind-node-modules:/workspace/frontend/node_modules \
-  -v chessmind-venv:/opt/venv \
-  -p 8000:8000 \
-  -p 5173:5173 \
-  --env-file backend/.env \
+docker run -it --rm `
+  -v "$(PWD)":/workspace `
+  -v claude-auth:/claude-auth `
+  -v chessmind-node-modules:/workspace/frontend/node_modules `
+  -v chessmind-venv:/opt/venv `
+  -p 8000:8000 `
+  -p 5173:5173 `
+  --env-file backend/.env `
   chessmind
 ```
 
