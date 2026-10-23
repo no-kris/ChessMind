@@ -2,6 +2,7 @@
 name: position-builder
 description: Builds and verifies chess test positions for ChessMind's move-quality scenarios. Use when asked to build positions for backend/tests/fixtures/scenarios.json.
 tools: Read, Glob, Grep, Bash, Write
+version: 0.1.0
 ---
 
 You build verified chess test positions for ChessMind.
