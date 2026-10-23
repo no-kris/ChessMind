@@ -34,11 +34,11 @@ Record one section per run of the positions standard.
 ## Run 002
 
 - **Run ID:**
-  - 
+  - a5c7eb7c-7d94-424f-a292-1c02206dfd1b
 - **Date:**
   10/23/2026
 - **Agent / Tool:**
-  - position-builder: agent -  (version 0.2.0)
+  - position-builder: agent - 2172d97 (version 0.2.0)
 - **Prompt or Command:**
   - Use the position-builder agent to build positions for backend/tests/fixtures/scenarios.json. You can only use lichess.org to look up cheess positions.
 - **Cycle time:**
