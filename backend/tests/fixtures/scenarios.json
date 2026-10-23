@@ -1,0 +1,38 @@
+[
+  {
+    "id": "white_opening_move",
+    "side_to_move": "white",
+    "description": "A standard, well-known opening move",
+    "expected_bucket": "good"
+  },
+  {
+    "id": "black_opening_reply",
+    "side_to_move": "black",
+    "description": "A standard, well-known reply in a common opening",
+    "expected_bucket": "good"
+  },
+  {
+    "id": "white_hangs_queen",
+    "side_to_move": "white",
+    "description": "Moves the queen to a square where it can be captured for free",
+    "expected_bucket": "blunder"
+  },
+  {
+    "id": "black_misses_mate",
+    "side_to_move": "black",
+    "description": "Has a mate in one but plays a different move",
+    "expected_bucket": "blunder"
+  },
+  {
+    "id": "white_passive_move",
+    "side_to_move": "white",
+    "description": "Plays a passive move when a clearly better one is available",
+    "expected_bucket": "inaccuracy"
+  },
+  {
+    "id": "black_loses_pawn",
+    "side_to_move": "black",
+    "description": "Allows a pawn to be captured for free with no compensation",
+    "expected_bucket": "mistake"
+  }
+]
