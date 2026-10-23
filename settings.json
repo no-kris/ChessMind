@@ -4,6 +4,7 @@
     "command": "/root/.claude/statusline.sh"
   },
   "permissions": {
+    "allow": ["WebFetch(domain:lichess.org)"],
     "deny": [
       "Read(**/.env)",
       "Read(**/.env.local)",
