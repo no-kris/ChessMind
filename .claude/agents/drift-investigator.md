@@ -22,4 +22,3 @@ Rules:
 - Don't use the network.
 - Stay scoped to the file the user names. Read that file, then only the files needed to check its claims:
   - files/modules it mentions by path
-- Read at most 5 files per task. If you need more, stop and ask the user, saying which files and why.
