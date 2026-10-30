@@ -9,13 +9,13 @@
 **Steps**
 1. Read `scenarios.json`. Each scenario has `id`, `side_to_move`, `description` and `expected_bucket`.
 2. For each scenario, choose a position (FEN) and a move that fit the description. The FEN must be valid, with the right side to move, and the move must be legal.
-3. Check it with Stockfish at depth 15, using `analyse` from `app/services/engine.py` and `eval_loss` and `bucket` from `app/services/classify.py`. It passes if the label matches `expected_bucket` and the loss is in the safe target range:
+3. Check it with Stockfish at depth 15 with `multipv=1` (matching the test), using `analyse` from `app/services/engine.py` and `eval_loss` and `bucket` from `app/services/classify.py`. It passes if the label matches `expected_bucket` and the loss is in the safe target range:
    - good: 10 or less
    - inaccuracy: 50–79
    - mistake: 120–279
    - blunder: 320 or more
 4. If it doesn't pass, try a different position or move, up to 3 attempts. Never change `expected_bucket`. If it still fails, report it as unverified and move on.
-5. Write the passing positions to `backend/tests/fixtures/positions.json`, one entry each: `id`, `fen`, `move` (UCI), `expected_bucket`, `loss_cp`.
+5. Write the passing positions to `backend/tests/fixtures/positions.json`, one entry each: `id`, `fen`, `move` (UCI), `expected_bucket`, `loss_cp`. `loss_cp` is the loss measured in step 3; the test fails if it is more than 20 cp from what the test measures.
 6. Report which scenarios passed, and for each unverified one, the best attempt and its loss.
 
 **Rules**

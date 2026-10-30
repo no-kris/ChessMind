@@ -17,6 +17,9 @@ from app.services.engine import analyse, open_engine
 FIXTURES = Path(__file__).parent / "fixtures"
 DEPTH = 15
 
+# How far the stored loss_cp may be from the loss the test measures.
+LOSS_TOLERANCE = 20
+
 # Safe target range for each label (inclusive). None means no upper limit.
 SAFE_RANGES = {
     "good": (0, 10),
@@ -92,3 +95,6 @@ async def test_stockfish_confirms_label(pos):
 
     assert bucket(loss) == label, f"Loss {loss} grades as '{bucket(loss)}', expected '{label}'"
     assert in_safe_range(loss, label), f"Loss {loss} is too close to a cutoff for '{label}'"
+    assert abs(loss - pos["loss_cp"]) <= LOSS_TOLERANCE, (
+        f"Stored loss_cp {pos['loss_cp']} is more than {LOSS_TOLERANCE} from the measured {loss}"
+    )
