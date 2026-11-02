@@ -63,11 +63,11 @@ Run 001's puzzle-like `black_misses_mate` met Scenario Fidelity Level 3 but not 
 | 0.1.0 | `a617a9e` | 2026-10-23 | Run 001 | Baseline role, tools, write restriction, no label changes, stop on failure. PRD adds ranges/retries. |
 | 0.2.0 | `e9df3bf` | 2026-10-23 | Run 002 | Added `WebFetch`, lichess-only real-game provenance, played-move requirement, network restriction, Lichess failure handling. |
 | 0.3.0 | `d85e9c2` | 2026-11-01 | none | Post-run restructure of the PRD workflow. Did not participate in Run 001 or Run 002. |
-| 0.3.1 | `e5a54fb` | 2026-11-02 | none | Restores the 0.2.0 guarantees 0.3.0 dropped; adds the PRD Done-when gate; fixes the tools/write-access contradiction and stray backtick. No label, loss-range, retry, or output-schema change. |
+| 0.3.1 | `e5a54fb` | 2026-11-02 | Run 002 (behavioral equivalence; no separate run) | Restores the 0.2.0 guarantees 0.3.0 dropped; adds the PRD Done-when gate; fixes the tools/write-access contradiction and stray backtick. No label, loss-range, retry, or output-schema change. |
 
 **0.3.0 accounting:** 0.3.0 restated the PRD but dropped three 0.2.0 guarantees: the graded move must be the move actually played, the network is only for `lichess.org`, and Lichess is included in the failure stop condition. 0.3.1 restores all three.
 
-**Why the submitted definition preserves the evaluated behavior:** v0.3.1 is a post-run consistency revision. It restores the v0.2.0 guarantees and adds only the PRD's already-binding "Done when" gate. It changes no label, loss-range, retry, scenario-selection, or output-schema rule. The evaluated behavior is therefore v0.2.0; v0.3.1 is a documentation and prompt-structure revision of that behavior, not a new behavioral version.
+**Why the submitted definition preserves the evaluated behavior:** v0.3.1 is a post-run consistency revision. It restores the v0.2.0 guarantees and adds only the PRD's already-binding "Done when" gate. It changes no label, loss-range, retry, scenario-selection, or output-schema rule. Its behavior is therefore the same as the v0.2.0 evaluated in Run 002; it was not separately run.
 
 **Post-run note:** `docs/drift-report.md` later proposed dropping mandatory Lichess sourcing. That postdates Runs 001/002; if applied, log it as a separate revision.
 
@@ -102,7 +102,7 @@ Run 001's puzzle-like `black_misses_mate` met Scenario Fidelity Level 3 but not 
   - Verification Accuracy 4/4 — all positions passed; losses and labels reported.
   - Scenario Fidelity 4/4 — `black_misses_mate` replaced with a real-game line.
   - Report Completeness 4/4 — all six scenarios accounted for; no buckets changed.
-- **Weak spot:** v0.2.0 was committed with its run result, not as a separate pre-run baseline. The clean pre-test example is the Run 001 baseline (`a617a9e` + `14615fd` + `0490393`).
+- **Weak spot:** `e9df3bf` was committed at run completion, but the v0.2.0 working-tree definition (WebFetch plus the lichess-only prompt) was the input to the run. The clean pre-test commit example is the Run 001 baseline (`a617a9e` + `14615fd` + `0490393`).
 - **Pass/Fail:** Pass
 
 ---
