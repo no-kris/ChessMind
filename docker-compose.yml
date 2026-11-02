@@ -1,0 +1,48 @@
+services:
+  proxy:
+    image: vimagick/tinyproxy
+    restart: unless-stopped
+    volumes:
+      - ./tinyproxy.conf:/etc/tinyproxy/tinyproxy.conf:ro
+      - ./filter:/etc/tinyproxy/filter:ro
+    networks:
+      - restricted
+      - egress
+
+  dev:
+    build: .
+    init: true
+    stdin_open: true
+    tty: true
+    environment:
+      HTTP_PROXY: http://proxy:8888
+      HTTPS_PROXY: http://proxy:8888
+      http_proxy: http://proxy:8888
+      https_proxy: http://proxy:8888
+      NO_PROXY: localhost,127.0.0.1,::1
+    volumes:
+      - .:/workspace
+      - claude-auth:/claude-auth
+      - chessmind-node-modules:/workspace/frontend/node_modules
+      - chessmind-venv:/opt/venv
+    ports:
+      - "8000:8000"
+      - "5173:5173"
+    networks:
+      - restricted
+
+networks:
+  restricted:
+    name: chessmind-net
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+  egress:
+    name: chessmind-egress
+
+
+volumes:
+  claude-auth:
+  chessmind-node-modules:
+  chessmind-venv:

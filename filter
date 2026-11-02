@@ -1,0 +1,17 @@
+# Anthropic / Claude Code
+(^|\.)anthropic\.com$
+(^|\.)claude\.ai$
+
+# Chess position sourcing (position-builder)
+(^|\.)lichess\.org$
+
+# Optional: needed by the container's startup installs
+(^|\.)pypi\.org$
+(^|\.)files\.pythonhosted\.org$
+(^|\.)registry\.npmjs\.org$
+(^|\.)github\.com$
+(^|\.)codeload\.github\.com$
+(^|\.)objects\.githubusercontent\.com$
+(^|\.)raw\.githubusercontent\.com$
+(^|\.)accounts\.google\.com$
+(^|\.)www\.googleapis\.com
