@@ -1,15 +1,15 @@
 # Iteration Log
 
-## 1. Pre-Test Contract
+## 1. Pre-Test History
 
 **The definition and rubric were committed before Run 001.**
 
-- Agent v0.1.0: `a617a9e`, 2026-10-23 18:32:39 -0400
-- PRD: `14615fd`, 2026-10-23 18:33:17 -0400
-- Rubric and threshold: `0490393`, 2026-10-23 18:33:47 -0400
-- Run 001 record: `8d21c5e`, 2026-10-23 19:14:13 -0400
+- Agent v0.1.0: `a617a9e`, 2026-10-23 18:32:39
+- PRD: `14615fd`, 2026-10-23 18:33:17
+- Rubric: `0490393`, 2026-10-23 18:33:47
+- Run 001 record: `8d21c5e`, 2026-10-23 19:14:13
 
-`git merge-base --is-ancestor a617a9e 8d21c5e` succeeds. The baseline and rubric were committed about 41 minutes before the Run 001 record. `8d21c5e` is the **run record**, not the definition commit.
+The baseline and rubric were committed about 41 minutes before the Run 001 record. `8d21c5e` is the **run record**, not the definition commit.
 
 **Complete definition at baseline:**
 
@@ -18,7 +18,7 @@
 - Failure handling: PRD L24.
 - Pass gates: PRD L26–28; rubric L65–66.
 
-**Baseline definition v0.1.0 (`a617a9e`, verbatim):**
+**Baseline agent definition v0.1.0 (`a617a9e`, verbatim):**
 
 ```markdown
 ---
@@ -65,16 +65,16 @@ Run 001's puzzle-like `black_misses_mate` met Scenario Fidelity Level 3 but not 
 
 ---
 
-## 2. Version Ledger
+## 2. Agent version history
 
 - **0.1.0** (`a617a9e`, 2026-10-23) — evaluated by Run 001. Baseline role, tools, write restriction, no label changes, stop on failure. The PRD adds ranges and retries.
-- **0.2.0** (`e9df3bf`, 2026-10-23) — evaluated by Run 002. Added `WebFetch`, lichess-only real-game provenance, played-move requirement, network restriction, and Lichess failure handling.
+- **0.2.0** (`e9df3bf`, 2026-10-23) — evaluated by Run 002. Added `WebFetch`, lichess real-game sourcing, played-move requirement, network restriction, and Lichess failure handling.
 - **0.3.0** (`d85e9c2`, 2026-11-01) — not evaluated. Post-run restructure of the PRD workflow; did not participate in Run 001 or Run 002.
-- **0.3.1** (`e5a54fb`, 2026-11-02) — current definition, covered by Run 002 through behavioral equivalence; no separate run. Restores the 0.2.0 guarantees 0.3.0 dropped, adds the PRD Done-when gate, and fixes the tools/write-access contradiction and stray backtick. No label, loss-range, retry, or output-schema change.
+- **0.3.1** (`e5a54fb`, 2026-11-02) — current definition. Covered by Run 002 through behavioral equivalence; not separately run yet. Run 003 is planned (template in Section 8). Restores the 0.2.0 guarantees 0.3.0 dropped, adds the PRD done-when gate, and fixes the tools/write-access contradiction and stray backtick. No label, loss-range, retry, or output-schema change.
 
 **0.3.0 accounting:** 0.3.0 restated the PRD but dropped three 0.2.0 guarantees: the graded move must be the move actually played, the network is only for `lichess.org`, and Lichess is included in the failure stop condition. 0.3.1 restores all three.
 
-**Why the submitted definition preserves the evaluated behavior:** v0.3.1 is a post-run consistency revision. It restores the v0.2.0 guarantees and adds only the PRD's already-binding "Done when" gate. It changes no label, loss-range, retry, scenario-selection, or output-schema rule. Its behavior is therefore the same as the v0.2.0 evaluated in Run 002; it was not separately run.
+**Why the submitted definition preserves the evaluated behavior:** v0.3.1 is a post-run consistency revision. It restores the v0.2.0 guarantees and adds only the PRD's already-binding "Done when" gate. It changes no label, loss-range, retry, scenario-selection, or output-schema rule. Its behavior is therefore the same as the v0.2.0 evaluated in Run 002; it had not been separately run when this log was written. The Run 003 template records the planned evaluation.
 
 **Post-run note:** `docs/drift-report.md` later proposed dropping mandatory Lichess sourcing. That postdates Runs 001/002; if applied, log it as a separate revision.
 
@@ -116,18 +116,18 @@ Run 001's puzzle-like `black_misses_mate` met Scenario Fidelity Level 3 but not 
 
 ## 5. Comparison & Calibration
 
-**Scores (Run 001 → Run 002):**
-- Verification Accuracy: 4/4 → 4/4, no change.
-- Scenario Fidelity: 3/4 → 4/4, +1.
-- Report Completeness: 4/4 → 4/4, no change.
+**Scores (Run 001 - Run 002):**
+- Verification Accuracy: 4/4 - 4/4, no change.
+- Scenario Fidelity: 3/4 - 4/4, +1.
+- Report Completeness: 4/4 - 4/4, no change.
 
-**Time and cost (Run 001 → Run 002):**
-- Cycle time: 3m1s → 10m0s, +6m59s.
-- Review latency: 10m38s → 16m0s, +5m22s.
-- Tokens: 162.0k in / 1.2k out → 155.7k in / 1.5k out, −6.3k in and +0.3k out.
-- Cost: $0.46 → $1.38, +$0.92 (3.0×).
+**Time and cost (Run 001 - Run 002):**
+- Cycle time: 3m1s - 10m0s, +6m59s.
+- Review latency: 10m38s - 16m0s, +5m22s.
+- Tokens: 162.0k in / 1.2k out - 155.7k in / 1.5k out, −6.3k in and +0.3k out.
+- Cost: $0.46 - $1.38, +$0.92 (3.0×).
 
-**Scope (Run 001 → Run 002):**
+**Scope (Run 001 - Run 002):**
 - Changed files: `positions.json` in both runs.
 - Test gate: pass in both runs.
 
@@ -139,7 +139,7 @@ Run 001's puzzle-like `black_misses_mate` met Scenario Fidelity Level 3 but not 
 
 ---
 
-## 6. Revision Diff (v0.1.0 → v0.2.0)
+## 6. Revision Diff (v0.1.0 - v0.2.0)
 
 ```diff
 -tools: Read, Glob, Grep, Bash, Write
@@ -163,7 +163,7 @@ The misfire was provenance, not classification. The test already passed. The dif
 
 ---
 
-## 7. Instruction Trace (v0.2.0 → v0.3.x)
+## 7. Instruction Trace (v0.2.0 - v0.3.x)
 
 Each v0.2.0 rule, with its status in 0.3.0 and 0.3.1:
 
@@ -179,21 +179,38 @@ Each v0.2.0 rule, with its status in 0.3.0 and 0.3.1:
 
 ---
 
-## 8. Evidence
+## 8. Run 003 Template
 
-```bash
-git show -s --format='%h %ai %s' a617a9e 14615fd 0490393 8d21c5e e9df3bf d85e9c2 e5a54fb
-git merge-base --is-ancestor a617a9e 8d21c5e && echo "baseline-before-run-001"
-```
+*Unfilled until the run is performed. Do not record results here in advance.*
+
+- **Run ID:** `<fill>`
+- **Date:** `<fill>`
+- **Definition:** v0.3.1 `e5a54fb` + PRD `14615fd` + rubric `0490393`
+- **Rubric and threshold:** unchanged from `0490393`
+- **Pre-test HEAD:** `<paste git rev-parse HEAD>`
+- **Pre-test working tree:** `<paste git status --short>` — `setup.md` and the untracked Docker/proxy files are expected; `positions.json` and the definition must be unchanged.
+- **Network prerequisite:** the dev container reaches `lichess.org` only through the proxy allowlist. Confirm with `curl -x http://proxy:8888 https://lichess.org/api/user/thibault` returning 200, and restart the `proxy` service after any `filter` change.
+- **Prompt:** "Build positions for `backend/tests/fixtures/scenarios.json`. Use only `lichess.org`."
+- **Cycle / review / cost:** `<fill>`
+- **Changed files:** `<fill>` — expected: `positions.json` only.
+- **Test gate:** `<fill>` — expected: `uv run pytest tests/test_classify_positions.py` passes from `backend/` with the engine tests running.
+- **Provenance:** `<fill>` — one Lichess game URL or game ID per scenario, with the played move.
+- **Scores:** Verification Accuracy `<fill>/4`; Scenario Fidelity `<fill>/4`; Report Completeness `<fill>/4`.
+- **Expected vs observed:** `<fill>`
+- **Pass/Fail:** `<fill>`
+
+**Commit sequence:** (1) `e5a54fb` is the pre-test definition; (2) run; (3) commit `positions.json` separately from the completed log; (4) record the run-record commit here and in the version history.
+
+---
+
+## 9. Version history
 
 ```text
-a617a9e 2026-10-23 18:32:39 -0400 .claude/agents/position-builder.md: version 0.1.0 agent builds and verfies test positions for move scenarios.
-14615fd 2026-10-23 18:33:17 -0400 docs/prd-positions.md: Create prd for position-builder agent.
-0490393 2026-10-23 18:33:47 -0400 docs/rubric-positions.md: Create grading rubric for prd-positions.md.
-8d21c5e 2026-10-23 19:14:13 -0400 chore(agent): complete Run 001 baseline evaluation for position-builder v0.1.0 Rubric Score: 11/12 (Scenario fidelity docked for synthetic puzzle position in black_misses_mate). Cost: $0.46 (162.0k in / 1.2k out).
-e9df3bf 2026-10-23 19:51:03 -0400 fix(agent): grant lichess web-fetch access for v0.2.0 position-builder
-d85e9c2 2026-11-01 20:47:39 -0500 chore: apply project updates
-e5a54fb 2026-11-02 16:14:53 -0500 docs(agent): restore v0.2.0 guarantees in v0.3.1
+a617a9e 2026-10-23 .claude/agents/position-builder.md: version 0.1.0 agent builds and verfies test positions for move scenarios.
+14615fd 2026-10-23 docs/prd-positions.md: Create prd for position-builder agent.
+0490393 2026-10-23 docs/rubric-positions.md: Create grading rubric for prd-positions.md.
+8d21c5e 2026-10-23 chore(agent): complete Run 001 baseline evaluation for position-builder v0.1.0 Rubric Score: 11/12 (Scenario fidelity docked for synthetic puzzle position in black_misses_mate). Cost: $0.46 (162.0k in / 1.2k out).
+e9df3bf 2026-10-23 fix(agent): grant lichess web-fetch access for v0.2.0 position-builder
+d85e9c2 2026-11-01 chore: apply project updates
+e5a54fb 2026-11-02 docs(agent): restore v0.2.0 guarantees in v0.3.1
 ```
-
-No credentials, `.env` files, or tokens are included. The only network permission is `WebFetch(domain:lichess.org)` in the root `settings.json`.
