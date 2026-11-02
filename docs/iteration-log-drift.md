@@ -49,20 +49,23 @@ Record one section per run of the drift-investigation standard.
   - Phase 2: sess in: 708.5k out: 11.3k $: $0.82
 
 **Rubric scores (with brief notes):**
-  - 1. Accuracy: 4/4 - Accurately incorporated current facts and correctly applied the requirement change to invalidate D2 in the drift report requiring Lichess sourcing.
-  - 2. Task Adherence: 4/4 - Successfully followed all constraints, and restricting edits solely to docs/drift-report.md.
-  - 3. Coherence: 4/4 - The final verification decisions, handoff document, and updated drift report remained aligned and consistent after the requirement change.
+  - 1. Accuracy: 4/4 - Citations were rechecked and the test passed. The requirement change revised D2 from High/open to Medium/Stale; D3 stayed Medium/Omission and D1 stayed High/open.
+  - 2. Task Adherence: 4/4 - The agent wrote only docs/drift-report.md. The workflow also refreshed the Phase 1 handoff, which the plan lists under "Artifact To Revisit Later". No code, docs, or config outside those two artifacts wer changed.
+  - 3. Coherence: 3/4 - The report and the handoff's Phase 2 update agree on D2 as Medium/Stale, but "Progress since run 1" still called D2 an open High finding. That inconsistency was corrected in this review (handoff L15).
+
+
 
 **Specific evidence supporting each score:**
-  - Accuracy: The run successfully updated the drift report when the Lichess game sourcing requirement was dropped, making sure no dependent requirements remained active.
-  - Task Adherence: The agent stayed consistant with the constraints and did not attempt to edit/modify any files outside of the required drift-report.
-  - Coherence: The final report, handoff, and verification verdicts matched cleanly after the requirement update executed.
+  - Accuracy: Report L13-16 records the recheck and the requirement change; L54-55 rewrites D2; L78-85 retains D3; L145-162 keeps D1 High and gives the final counts (1 high, 3 medium, 2 low-medium, 6 low).
+  - Task Adherence: Report L16 states that only the report and its handoff changed; plan L24 authorizes the handoff refresh; no target, code, fixture, or config edit appears in either artifact.
+  - Coherence: Report L162 and handoff L9 agree; handoff L15 contradicted them by keeping D2 open High. Coherence is therefore 3/4, and the defect is corrected in this revision.
+
 
 **Pass / Fail result:**
   - Pass
 
 **Context drift or other misfires observed:**
-  - Summary drift initially softened severities in the handoff document, but this was successfully caught and corrected by the in Phase 2 after editing the drift report for the requirement change.
+  - Summary drift softened D2 from High to Medium in the handoff. The Phase 2 update caught the severity change but left the “Progress since run 1” line saying D2 was still open High; that residual line was corrected in this review.
 
 **One context-management choice to change in a future run:**
   - Use the structured drift report directly to build the handoff document to ensure initial summaries match exact report severities before changes occur.
@@ -78,6 +81,6 @@ Record one section per run of the drift-investigation standard.
   - 197927a - Created drift investigator agent.
 
 **Observations:**
-  - What worked: Phase 1 extracted findings under the waived file cap, and Phase 2 successfully executed a requirement-driven revision loop by removing D2 and D3 based on the mid-session rule change.
+  - What worked: Phase 1 extracted findings, and Phase 2 rechecked every citation and executed the requirement-driven revision: D2 moved from High/open to Medium/Stale, D3 stayed Medium/Omission, and D1 stayed High/open.
   - What failed: Initial summary drift between Phase 1 and Phase 2 required explicit intervention.
-  - What changed between runs: Upgraded evaluation dimensions to Accuracy, Task Adherence, and Coherence, resolved the file-cap constraint via an explicit waiver, and introduced a genuine requirement-driven revision.
+  - What changed between runs: Upgraded evaluation dimensions to Accuracy, Task Adherence, and Coherence, and introduced a genuine requirement-driven revision.

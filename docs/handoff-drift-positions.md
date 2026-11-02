@@ -12,7 +12,7 @@ The run was a single drift-investigator agent. It compared the working-tree (unc
 
 ## Progress since run 1
 
-Several run-1 findings no longer appear and are now listed as consistent. They are the 20 cp loss tolerance, which is now in the docs and enforced by the test (run-1 D5), `multipv=1` in the PRD (run-1 D7), and the agent description and write rules. The two high findings from run 1, unverified scenarios versus the test gate and the Lichess sourcing rule, are **still open** as D1 and D2.
+Of the two high findings from run 1, D1 remains open and High. D2’s decision was settled by the requirement change; it is now a Medium/Stale cleanup finding.
 
 ## Scope and limits
 
