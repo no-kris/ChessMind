@@ -1,70 +1,85 @@
 # Memory Architecture
 
 ## What this workflow needs to remember
-This workflow helps maintain ChessMind’s docs, PRDs, rubrics, and agent definitions by running drift investigations that compare documented claims against the code/tests and report discrepancies with evidence, without editing anything. Across sessions, it needs to remember decisions about which fixes to apply, any unresolved direpancies, and the current active constraints. It does not need to store information already captured by code, tests, or configurations. It must not store credentials, API keys, environment secrets, or previous run details such as cost, or timing.
+
+This workflow runs drift investigations. It compares claims in ChessMind's docs, PRDs, rubrics, and agent files against the code and tests, then reports discrepancies with evidence. It does not edit the files it checks.
+
+Across sessions, it needs to remember:
+
+- which fixes the user approved,
+- which discrepancies are still open, and
+- the constraints that still apply.
+
+It does not need to store anything the code, tests, or config already record. It must never store credentials or secrets, and it does not keep run cost or timing.
+
 
 ## Layer 1: Project memory directory
-# Belongs here
-- Store: Prior findings located in drift-report.md.
-- Any unresolved conflicts with exact file/line reference.
-- Current goals: User approved decisions for resolving code/document conflicts.
-- Preferred approach: User has the final word for implementing fixes.
+**Belongs here**
+- Open decisions: which findings are accepted, deferred, or rejected.
+- Unresolved discrepancies, with file and line on both sides.
+- Active constraints that affect the next investigation.
+- The rule that the user makes the final call on fixes.
 
-# Does not belong here
+**Does not belong here**
 - API keys or environment secrets.
 - Future feature decisions.
 - Copies of PRDs, code, or tests.
+- Full findings. Link to the report instead.
 
 - **Scope:** Shared across drift investigations.
-- **Write permissions:** The agent may write to only docs/drift-report.md, but all other files are read-only.
-- **Pruning policy:** 
-  - Entries tied to a specific conflict are archived when that conflict is resolved.
-  - Review when the investigation process changes.
+- **Write permissions:** The investigator agent does not write here. It writes only `docs/drift-report.md`. The user or workflow updates this file after a decision.
+- **Pruning policy:** Move a resolved item to a short Resolved list with the date and a link to the report. Delete items that no longer affect future runs. Review the file when the investigation process changes.
 
 ## Layer 2: Knowledge files
-# Belongs here
-- Agent: Use .claude/agents/drift-investigator.md to see the agent instructions.
-- Rules and acceptance criteria: Use docs/prd-drift-investigation.md to see the workflow rules and acceptance criteria.
-- Quality Standards: Use docs/rubric-drift-investigations.md to see the qualitiy standards for drift investigations.
+Pointers to the files that define how the agent works.
 
-# Does not belong here
-- Handoffs: Any agent generated summary handoffs.
-- Logs: The runs in docs/iteration-log-drift.md do not have reusable instructions.
-- Future feature decisions and/or improvements.
+**Belongs here**
+- Agent instructions: `.claude/agents/drift-investigator.md`.
+- Workflow rules and acceptance criteria: `docs/prd-drift-investigation.md`.
+- Quality standard: `docs/rubric-drift-investigation.md`.
+
+**Does not belong here**
+- Handoffs and run logs. They record one session, not reusable instructions.
+- Future feature plans or improvement ideas.
+- Copies of these files. Point to the original.
 
 - **Scope:** Shared across drift investigations.
-- **Write permissions:** The agent may write to only docs/drift-report.md, but all other files are read-only.
-- **Pruning policy:** 
-  - Entries tied to a specific conflict are archived when that conflict is resolved.
+- **Write permissions:** Read-only. The agent writes only `docs/drift-report.md`.
+- **Pruning policy:** Update a pointer when its file is renamed or replaced. Remove pointers to files that no longer exist.
 
 ## Layer 3: Indexed reference documents
-# Belongs here
-- History: Any prior drift reports.
-- Previous decisions: Previous decisions made to resolve conflicts.
-- Quality Standards: Copies of any relevant PRDs and/or rubrics relevant to drift reports.
+Source material the investigator reads, linked rather than copied.
 
-# Does not belong here
-- API keys, or environment secrets.
-- Vendor files such as Python virtual environments, node_modules, caches, or lockfiles.
+**Belongs here**
+- The named target and the files it directly references: docs, code, tests, fixtures, config.
+- Prior drift reports, linked by path or commit.
+- The canonical PRD and rubric, linked from Layer 2.
 
-- **Scope:** Shared across ChessMind drift investigations; retrieve only what’s relevant to the named target.
-- **Write permissions:** Investigator agent may search/read, not edit. 
-- **Pruning policy:** 
-  - Refresh when sources change.
-  - Remove deleted or out-of-scope entries. 
-  - Keep old reports indexed only while useful.
+**Does not belong here**
+- API keys or environment secrets.
+- Vendored or generated files: virtual environments, node_modules, caches, lockfiles.
+- Copies of source files. Link to the original.
+- The current run's draft report and handoff. They become references after the run ends.
+
+- **Scope:** Shared across drift investigations. Retrieve only what the named target references.
+- **Write permissions:** Read-only. The agent may search and read, never edit.
+- **Pruning policy:** Drop entries whose path moved, was deleted, or is no longer relevant. Keep an old report only while it still informs a decision.
 
 
 ## Allocation decision table
 
 | Information | Store it in | Example |
 |---|---|---|
-| Cross-investigation decisions or unresolved discrepancies | Layer 1: Project memory | Brief status and evidence links; not a copied report |
-| Reusable investigation instructions and quality rules | Layer 2: Knowledge files | Drift-investigator agent, PRD, and rubric |
-| Source material to search for evidence | Layer 3: Indexed references | Docs, code, tests, and useful past reports linked to originals |
-| Notes and findings for the current investigation | That investigation's report or handoff | Temporary file list, progress, and draft findings |
-| Secrets or irrelevant/generated content | Nowhere | Never store secrets; exclude vendor files and caches from the index |
+| Decisions, open discrepancies, and active constraints | Layer 1: Project memory | A status line and a link to the report |
+| Instructions, rules, and quality standards | Layer 2: Knowledge files | Agent, PRD, and rubric paths |
+| Source material used as evidence | Layer 3: Indexed references | Docs, code, tests, and prior reports, linked |
+| Notes and draft findings for the current run | The run's report and handoff (working artifacts) | Progress, file list, draft findings |
+| Secrets, vendor files, or generated content | Nowhere | Never store secrets; exclude caches and node_modules |
+
+When a run ends, decisions move to Layer 1 and the report becomes a Layer 3 reference. The handoff stays with the run or is discarded.
+
 
 ## Alternatives considered
-- One combined memory store: Simpler, but mixes decisions, procedures, and source references, making stale information harder to manage.
-- Copy all references into memory: Convenient to search, but duplicates docs and code, risking stale evidence and context bloat.
+- **One combined store.** Simpler, but decisions, instructions, and source files age at different rates, so stale entries are hard to spot and remove.
+- **Copy every reference into memory.** Faster to search, but the copy can drift from the original, and the extra context costs space on every run.
+- **No persistent memory.** Cheapest to maintain, but each session would rediscover open decisions and repeat settled disagreements.
