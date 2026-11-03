@@ -59,7 +59,7 @@ Source material the investigator reads, linked rather than copied.
 - API keys or environment secrets.
 - Vendored or generated files: virtual environments, node_modules, caches, lockfiles.
 - Copies of source files. Link to the original.
-- The current run's draft report and handoff. They become references after the run ends.
+- The current run's drift report and handoff. They become references after the run ends.
 
 - **Scope:** Shared across drift investigations. Retrieve only what the named target references.
 - **Write permissions:** Read-only. The agent may search and read, never edit.
@@ -73,7 +73,7 @@ Source material the investigator reads, linked rather than copied.
 | Decisions, open discrepancies, and active constraints | Layer 1: Project memory | A status line and a link to the report |
 | Instructions, rules, and quality standards | Layer 2: Knowledge files | Agent, PRD, and rubric paths |
 | Source material used as evidence | Layer 3: Indexed references | Docs, code, tests, and prior reports, linked |
-| Notes and draft findings for the current run | The run's report and handoff (working artifacts) | Progress, file list, draft findings |
+| Notes and drift findings for the current run | The run's report and handoff (working artifacts) | Progress, file list, draft findings |
 | Secrets, vendor files, or generated content | Nowhere | Never store secrets; exclude caches and node_modules |
 
 When a run ends, decisions move to Layer 1 and the report becomes a Layer 3 reference. The handoff stays with the run or is discarded.
