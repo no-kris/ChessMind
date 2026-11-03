@@ -1,6 +1,8 @@
 # Anthropic / Claude Code
 (^|\.)anthropic\.com$
 (^|\.)claude\.ai$
+(^|\.)claude\.com$
+
 
 # Chess position sourcing (position-builder)
 (^|\.)lichess\.org$
