@@ -18,7 +18,7 @@
 
 - Level 3 example: Agent output reads: "white_hangs_queen: loss 845, blunder. black_opening_reply: loss 4, good."
 
-4. Exceeds – Every claimed scenario passes, losses match the test's measurements (within 20 cp), and the report shows each loss is inside its safe range.
+4. Exceeds – Every claimed scenario passes, the losses stated in the report (not just `loss_cp` in positions.json) are within 20 cp of the test's measurements, and each is shown next to its safe range.
 
 - Level 4 example: Agent output reads: "black_loses_pawn: loss 165, mistake (safe range 120–279)." The test measures the same 165.
 
@@ -46,25 +46,26 @@
 - Measures whether the final report gives a full, honest picture of the run, including any scenarios it couldn't verify.
 
 ### Scoring Guide
-1. Does not meet – A scenario is missing from both positions.json and the report, or a label was changed to match Stockfish.
+1. Does not meet – A scenario is missing from both positions.json and the report, a label was changed to match Stockfish, or a scenario used more than 3 attempts.
 
 - Level 1 example: The report lists 5 scenarios; `white_passive_move` is never mentioned.
 
-2. Partially meets – Every scenario is accounted for, but unverified ones have no details.
+2. Partially meets – Every scenario is accounted for, but attempt counts are missing or unverified ones have no details.
 
 - Level 2 example: Agent output reads: "white_passive_move: couldn't verify." No attempts or losses are given.
 
-3. Meets – Every scenario is accounted for. Unverified ones include the best attempt and its loss.
+3. Meets – Every scenario is accounted for with its attempt count. Unverified ones include the best attempt and its loss.
 
 - Level 3 example: Agent output reads: "white_passive_move: unverified after 3 attempts; best loss 112 (mistake)."
 
-4. Exceeds – Everything in Level 3, plus a specific reason for each failure and attempt counts for every scenario.
+4. Exceeds – Everything in Level 3, plus a specific reason for each failure.
 
 - Level 4 example: Agent output reads: "white_passive_move: unverified, 3 attempts. Every passive move I tried lost 110–150 because they also gave up the center. 5 others verified on the first attempt."
 
 **Pass threshold:**
-- A run passes if it scores 3 or higher on all three dimensions, and the PRD's pass/fail gates are met: positions.json is the only changed file, and `test_classify_positions.py` passes with the engine tests actually running.
-- Reasoning: Verification Accuracy and Scenario Fidelity together decide whether the positions can be trusted for Phase 4. Report Completeness makes sure failures are visible instead of hidden. A dimension floor stops a strong report from covering for positions that test the wrong thing.
+- A run passes if it scores 3 or higher on all three dimensions, and the PRD's pass/fail gates are met: positions.json is the only file changed relative to the working tree at the start of the run, and `test_classify_positions.py` passes when run from `backend/` with `STOCKFISH_PATH` set and the `engine` marker not deselected.
+- A run with any unverified scenario fails the test gate, so it does not pass. It is still scored on all three dimensions; an honest report of the unverified scenario can earn Level 3 or 4 on Report Completeness.
+- Reasoning: Verification Accuracy and Scenario Fidelity together decide whether the positions can be trusted for Phase 4 (Evaluation Pipeline & Delta Classification in `ai_chess_coach_project_plan.md`). Report Completeness makes sure failures are visible instead of hidden. A dimension floor stops a strong report from covering for positions that test the wrong thing.
 
 **Notes on Threshold Design:**
 - Considered an aggregate minimum (9/12). Ruled out because a run scoring 1 on Scenario Fidelity (right labels, wrong situations) could still pass, and those positions wouldn't actually test the Phase 4 cases.

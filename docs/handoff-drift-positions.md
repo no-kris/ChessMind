@@ -49,10 +49,10 @@ The following checked out across all three files and the code:
 
 Decide D1 first. It is the only intent decision still open from run 1, because the requirement change settled D2.
 
-- [ ] D1: should an unverified scenario fail the run, or should the test xfail missing scenarios?
+- [x] D1: should an unverified scenario fail the run, or should the test xfail missing scenarios? **Honest fail** (decided Nov 4, 2026; PRD and rubric updated, test unchanged).
 - [x] D2: are real Lichess games required? **No** (requirement dropped Nov 1, 2026).
-- [ ] D2 cleanup: remove the Lichess and WebFetch text from the agent and the `lichess.org` allow from `settings.json`, then update `agent-summary.md`.
-- [ ] Apply the agent-file fixes: D3, D4, D5, D12.
-- [ ] Apply the PRD and rubric wording fixes: D6–D11.
+- [x] D2 cleanup, **modified** (Nov 4, 2026): Lichess is now an optional fallback when no realistic constructed position fits. The agent (v0.4.0) no longer requires real games or forbids constructed ones; it keeps `WebFetch`, and the `lichess.org` allow in `settings.json` stays. `agent-summary.md` updated.
+- [x] Apply the agent-file fixes: D3, D5 applied to v0.4.0. D4 and D12 no longer apply: the Nov 2 revert to v0.2.0 (commit 2b23729) removed the lines they cited.
+- [x] Apply the PRD and rubric wording fixes: D6–D11 (D9: attempt counts now required for every scenario; over 3 attempts is Level 1).
 - [ ] Decide whether to commit `docs/drift-report.md` and this handoff.
 - [ ] Re-run the drift-investigator after the fixes to confirm they're resolved.

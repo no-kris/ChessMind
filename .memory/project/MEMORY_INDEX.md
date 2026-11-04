@@ -7,6 +7,7 @@ Last updated: 2026-11-04
 - `decisions/decision-001.md` — Implement the fixes for drift
  report findings D1–D12 so the position-builder agent, PRD and
  rubric agree with each other and with the tests. Recorded 2026-11-03.
+ Fixes applied 2026-11-04 (uncommitted); drift re-run still open.
  Review by 2027-02-01.
 
 - `decisions/decision-002.md` — Keep test files in a separate

@@ -43,13 +43,13 @@ This is a minimal Vite + React 19 + TypeScript app. `src/App.tsx` renders a `rea
 
 ## Agent tooling
 
-- **`.claude/agents/position-builder.md`** finds chess positions from real Lichess games and checks them with Stockfish for `scenarios.json`. Its spec is `docs/prd-positions.md` and `docs/rubric-positions.md`. Its version history and pre-test baseline are recorded in `docs/iteration-log-positions.md`.
+- **`.claude/agents/position-builder.md`** builds chess positions (constructed, or taken from real Lichess games as a fallback) and checks them with Stockfish for `scenarios.json`. Its spec is `docs/prd-positions.md` and `docs/rubric-positions.md`. Its version history and pre-test baseline are recorded in `docs/iteration-log-positions.md`.
 - **`.claude/agents/drift-investigator.md`** reports where docs and code disagree and does not edit anything. Its spec is `docs/prd-drift-investigation.md` and `docs/rubric-drift-investigation.md`.
 - **`docs/`** holds the rest of the agent material:
   - **Standards:** each one has a PRD and a rubric, and four of them have an iteration log. They cover drift, lint (`ruff`), positions, and testing/coverage.
   - **Reports:** `drift-report.md`, `drift-report-verification.md` and `handoff-drift-positions.md` are the October 2026 drift investigation of the position-builder.
   - **Process notes:** `context-management-techniques.md`, `memory-architecture.md` and `pre-session-plan.md`.
-- **`settings.json`** allows WebFetch to `lichess.org`. It blocks reading or editing `.env` files, running `env`/`printenv`, and editing lockfiles.
+- **`settings.json`** allows WebFetch to `lichess.org` (used only by the position-builder's fallback). It blocks reading or editing `.env` files, running `env`/`printenv`, and editing lockfiles.
 
 ## Dev workflow
 
