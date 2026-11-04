@@ -23,6 +23,10 @@ Last updated: 2026-11-04
  for this project. Human-maintained, read-only.
  Last reviewed 2026-11-02.
 
+- `../knowledge/testing-standards.md` — Testing standards
+ for this project. Defines how tests should be written and what should be covered. Human-maintained, read-only.
+ Last reviewed 2026-11-04.
+
 ## Archived entries
 
 (none yet)
