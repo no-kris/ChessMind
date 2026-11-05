@@ -1,6 +1,6 @@
 # Project Memory Index
 
-Last updated: 2026-11-04
+Last updated: 2026-11-05
 
 ## Active entries
 
@@ -27,6 +27,11 @@ Last updated: 2026-11-04
 - `../knowledge/testing-standards.md` — Testing standards
  for this project. Defines how tests should be written and what should be covered. Human-maintained, read-only.
  Last reviewed 2026-11-04.
+
+- `../reference/REFERENCE_INDEX.md` — Keyword index of reference
+ source material (docs, code, tests, fixtures, PRDs, rubrics, prior
+ reports). Links only, read-only. Query by keyword; do not read
+ every listed file. Last reviewed 2026-11-05.
 
 ## Archived entries
 
