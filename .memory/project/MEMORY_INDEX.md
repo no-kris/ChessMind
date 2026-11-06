@@ -14,17 +14,6 @@ Last updated: 2026-11-06
  `tests/` directory (e.g. `backend/tests/`), not alongside the
  source files. Recorded 2026-11-03. Review by 2027-02-01.
 
-- `decisions/decision-003.md` — Next implementation slice is Phase 1:
- in-memory game store plus create/get/move/delete game endpoints.
- The move endpoint computes from FEN + move, history is kept only for
- the "Why?" lookup, and there is no engine call. Includes the required
- tests. Recorded 2026-11-04. Implemented and committed 2026-11-06 on
- branch `feat/phase1-game-store` (not merged). Phase 1 complete; PGN
- export dropped by the user (do not re-add without asking).
- Ruff gate passes since 2026-11-06 (EXE002 fixed by `chmod 644`;
- reapply if files reappear as 777).
- Review by 2027-02-02.
-
 - `decisions/decision-004.md` — Game API contract: `/api/games`
  routes (incl. takeback), 201/200/204 success, 404 unknown game,
  400 bad FEN or move, 409 FEN mismatch or nothing to take back,
@@ -72,7 +61,13 @@ Last updated: 2026-11-06
 
 ## Archived entries
 
-(none yet)
+- `decisions/decision-003.md` — Phase 1 slice: in-memory game store
+ and game/move/takeback endpoints. Completed and merged to `main`
+ 2026-11-06 (fast-forward to f7b8663; not pushed). Archived per the
+ pruning rule (the branch merged). Still-relevant notes inside: PGN
+ export was dropped by the user (do not re-add without asking); if
+ ruff EXE002 reappears, `chmod 644` the files (they arrive as 777).
+ Details now live in decisions 004–007.
 
 ## Pruning schedule
 
