@@ -11,7 +11,7 @@
 - **The check lives in the store** (`GameStore.append_move`, since 2026-11-06). It raises `PositionMismatchError(ValueError)`, which the router maps to 409. Because the check and the append are one synchronous call, the rule holds for every caller, and a handler may `await` before calling it, e.g. for a Phase 2 engine call. `Game.history` is a read-only tuple and the list itself is private as `Game._history`, so nothing outside `GameStore` can append around the check. Tests lock this in: `test_history_cannot_be_changed_from_outside_the_store` and `test_two_requests_racing_from_the_same_position_record_only_one_move`. `apply_move` stays a pure function so Phases 2–4 can reuse it without a game.
 
 **Consequences for later phases:**
-- Replaying history from the start is valid, so PGN export (the open Phase 1 plan item) can simply walk the history in order.
+- Replaying history from the start is valid; any feature that walks the moves in order can rely on it. (PGN export was the motivating example but was dropped from scope on 2026-11-06; see [decision-003](decision-003.md).)
 - Phase 2's "position before a move = previous move's result" cache shortcut always holds.
 - **`move_id` values are reused after a takeback.** Take back move 3, play a different move, and the new move is also `move_id` 3. A "Why?" request (Phase 5) sent with a `move_id` from before the takeback would explain the new move. Either the client clears per-move UI on takeback, or Phase 5 should also accept the expected `fen_before` and return 409 when it differs.
 - **A game can only start from the standard start position.** Starting from a custom FEN (puzzles, analysis) would need an optional `fen` on `POST /api/games`. Not built.

@@ -19,8 +19,10 @@ Last updated: 2026-11-06
  The move endpoint computes from FEN + move, history is kept only for
  the "Why?" lookup, and there is no engine call. Includes the required
  tests. Recorded 2026-11-04. Implemented and committed 2026-11-06 on
- branch `feat/phase1-game-store` (not merged); PGN export still open.
- The ruff gate is blocked by pre-existing EXE002 file-mode errors.
+ branch `feat/phase1-game-store` (not merged). Phase 1 complete; PGN
+ export dropped by the user (do not re-add without asking).
+ Ruff gate passes since 2026-11-06 (EXE002 fixed by `chmod 644`;
+ reapply if files reappear as 777).
  Review by 2027-02-02.
 
 - `decisions/decision-004.md` — Game API contract: `/api/games`
