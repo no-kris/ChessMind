@@ -16,3 +16,5 @@
 - D9: attempt counts are required for every scenario; going over 3 attempts scores Level 1 on Report Completeness.
 - D4 and D12 no longer apply: the 2026-11-02 revert of the agent to v0.2.0 (commit 2b23729) removed the lines they cited. The agent is now v0.4.0.
 - Still open: re-run the drift-investigator to confirm, and decide whether to commit `docs/drift-report.md` and the handoff.
+
+**Update (2026-11-05):** The fixes were committed on 2026-11-04 in `3cae3da` ("docs(positions): apply drift report fixes for decision 001"), and `docs/drift-report.md` and `docs/handoff-drift-positions.md` are both tracked, so the commit question is settled. Only the drift-investigator re-run is still open.

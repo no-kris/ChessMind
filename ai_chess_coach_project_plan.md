@@ -25,10 +25,13 @@ The app is **session-only and stateless-by-design**: no user accounts, and nothi
 ### Phase 1: Python Backend & React Setup
 - [x] Initialize repository structure with a Python backend (FastAPI/Flask) and React SPA frontend.
 - [x] Install core backend dependencies (`python-chess`, engine drivers, HTTP client for custom LLM).
-- [ ] Build Python REST API endpoints to accept moves from React and manage board state.
-- [ ] Implement FEN/PGN utilities for state synchronization between React client and Python server.
-- [ ] Maintain an **in-memory session game store** keyed by a session ID (created per game, dropped when the session ends). No database — nothing persists after the game.
-- [ ] Keep the move endpoint **stateless**: the client sends `FEN + move`, the backend returns the analysis. Game history for the "Why?" button lives only in the session store.
+- [x] Build Python REST API endpoints to accept moves from React and manage board state: `POST /api/games`, `GET /api/games/{game_id}`, `POST /api/games/{game_id}/moves` (body `{fen, move}`, UCI moves), `DELETE /api/games/{game_id}`. Errors return a string `detail`: 404 unknown game, 400 bad FEN or move, 409 position mismatch, 422 malformed body.
+- [x] Implement FEN utilities for state synchronization: `apply_move` validates the FEN and move and returns canonical before/after FENs and SAN. Castling written as king-takes-rook (`e1h1`) is normalized to `e1g1`.
+- [ ] Implement PGN export of a game's history. History has no gaps, so it can be replayed in order.
+- [x] Maintain an **in-memory session game store** keyed by a game ID (uuid4 hex, created per game). No database; nothing persists. Games are dropped by `DELETE /api/games/{game_id}` or a server restart; there is no idle expiry yet. Requires a single server worker.
+- [x] Keep the move endpoint **stateless**: the result is computed from the client's `FEN + move`. It is recorded only if that FEN is the game's current position (409 otherwise), so history never has gaps. Engine analysis is added to this path in Phases 2 and 4. Game history for the "Why?" button lives only in the session store.
+- [x] Add a **takeback endpoint**: `POST /api/games/{game_id}/takeback` removes the last move (one ply) and returns the game at the previous position.
+- [x] Configure app logging: `LOG_LEVEL` env var (default `INFO`). Every game create, move, takeback and delete is logged with the game ID.
 
 ### Phase 2: Stockfish & Python Integration
 - [ ] Configure Stockfish binary execution using Python's `python-chess.engine` wrapper.
