@@ -15,7 +15,7 @@
 - D2: modified rather than applied as written. Lichess is an optional fallback when no realistic constructed position fits. It is no longer required, and constructed positions are allowed. The agent keeps `WebFetch`, and the `lichess.org` allow in `settings.json` stays.
 - D9: attempt counts are required for every scenario; going over 3 attempts scores Level 1 on Report Completeness.
 - D4 and D12 no longer apply: the 2026-11-02 revert of the agent to v0.2.0 (commit 2b23729) removed the lines they cited. The agent is now v0.4.0.
-- `docs/drift-report.md` is tracked in git (last content change in `3ba273d`). `docs/handoff-drift-positions.md` was last updated in `3cae3da`.
+- `docs/drift-report.md` is tracked in git (last changed in `9e8692f`, 2026-11-01). `docs/handoff-drift-positions.md` was last updated in `3cae3da`.
 
 **Complete:**
 - The fixes and user choices above, applied to the position-builder agent, `docs/prd-positions.md`, `docs/rubric-positions.md`, `agent-summary.md` and the handoff in `3cae3da`.
