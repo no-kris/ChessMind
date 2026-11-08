@@ -163,4 +163,10 @@ Score every run against:
   - What failed: The agent reported that the changes in decison-001.md were uncommitted, but then commited them without updating.
   - What changed between runs: Run 001 was recall only. This run exercised resumption. Next run: fix the decision-001 status text, run the drift-investigator re-run, and test a deliberate stale review date or scope mismatch, which neither run has covered.
 
+**Re-verification after correction:**
+  - Correction: `506532e` records the fixes as complete in `3cae3da` and the drift-investigator re-run as open (deferred), not part of memory verification.
+  - Reported state: a fresh session given "resume workflow in decision 001" reported the fixes complete and the re-run open, and did not call D1–D12 resolved.
+  - Proposed next action: the deferred drift-investigator re-run, after confirming with the user.
+  - Misfire: decision-001 cited the wrong commit for the drift report's last change. Fixed in `e47c5f3`.
+
 ---
