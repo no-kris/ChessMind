@@ -2,7 +2,7 @@
 
 **Date:** 2026-11-04
 **Review by:** 2027-02-02
-**Status:** Active
+**Status:** Completed and archived 2026-11-08 (merged to `main`)
 
 **Decision:** The next implementation work is Phase 1 of `ai_chess_coach_project_plan.md` (lines 25-31): an in-memory game store plus the game and move endpoints.
 
@@ -37,7 +37,8 @@ Tests go in `backend/tests/` per [decision-002](decision-002.md). They need no `
 - **2026-11-06 (router review):** Fixed three things. App logs had been silently dropped, now fixed in [decision-007](decision-007.md). 422s now use a string `detail`, and 400s now carry the `post move failed:` prefix ([decision-004](decision-004.md)). Errors for impossible positions now list status flag names. `pytest`: 76 passed. Confirmed against a real uvicorn server, not just TestClient.
 - **Committed 2026-11-06** on branch `feat/phase1-game-store` (not merged, not pushed), at the user's request. `ai_chess_coach_project_plan.md` Phase 1 was updated in the same commit: items ticked, takeback and logging added, and PGN export split out as the one open Phase 1 item. The 32 files whose only change was line endings (CRLF) were left out of the commit.
 - **PGN export dropped (2026-11-06):** the user decided they no longer want it, and gave no reason. The item was removed from the plan, so Phase 1 is complete. The plan's original "Implement FEN/PGN utilities" item and the tech-stack table's "FEN/PGN parsing" (a description of python-chess) don't mean it is still in scope. Don't re-add it without asking.
-- Still open: merge to `main`; decisions 004–005 were never explicitly reviewed by the user (who asked to commit them as they are).
+- **Merged 2026-11-08:** `feat/phase1-game-store` (tip `f7b8663`) reached `main` through merge commit `3cc4ce8` and is pushed to `origin/main`. Checked on `main` 2026-11-08: `pytest` 76 passed, `ruff check` clean.
+- Still open: decisions 004–005 were never explicitly reviewed by the user (who asked to commit them as they are).
 
 **Rationale:** Not recorded. The user stated the decision without giving a reason. It matches the project plan's next unchecked Phase 1 items.
 
