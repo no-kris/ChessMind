@@ -175,13 +175,16 @@ Iteration logs: `docs/iteration-log-*.md`
 
 | Information | Store it in | Example |
 |---|---|---|
+| Memory scope (which project this memory belongs to) | `.memory/SCOPE.md`, outside the three layers; read on startup | Project name and repo; the agent halts on a mismatch |
 | Decisions, open discrepancies, and active constraints | Layer 1: Project memory | A status line and a link to the report |
 | Approved implementation decisions | Layer 1: Project memory | `decision-003.md` (Phase 1 scope and tests) |
 | Coding and testing rules set by the human owner | Layer 2: Knowledge files | `coding-standards.md`, `testing-standards.md` |
 | Agent definitions, PRDs, and rubrics | Layer 3: Indexed references (linked) | `.claude/agents/drift-investigator.md`, `docs/rubric-drift-investigation.md` |
 | Source material used as evidence | Layer 3: Indexed references | Docs, code, tests, and prior reports, linked |
 | Notes and drift findings for the current run | The run's report and handoff (working artifacts) | Progress, file list, draft findings |
-| Secrets, vendor files, or generated content | Nowhere | Never store secrets; exclude caches and node_modules |
+| Sensitive business data (Confidential) | Nowhere; retrieve from secure systems on demand | Say in the response that it was not stored and where to retrieve it from |
+| Credentials, tokens, API keys, and PII (Secret) | Nowhere; use for the immediate task only | Record the environment variable name, never the value; the pre-commit hook blocks common credential patterns in `.memory/` (see Data Classification) |
+| Vendor files or generated content | Nowhere | Exclude caches and node_modules |
 
 When a run ends, decisions move to Layer 1 and the report becomes a Layer 3 reference. The handoff stays with the run or is discarded.
 
