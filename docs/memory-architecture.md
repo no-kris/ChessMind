@@ -299,6 +299,35 @@ bb7f187b073ec1b4afd8e9db8a4908da5d8d9fd4334104a9c7e701e901155254  /workspace/.me
 
 **Conclusion:** The restriction holds for the agent's effective user (`root`). Modifying an existing file and creating a new file were both refused by the system with `Read-only file system` (exit 1), no probe file was created, and the checksum of `coding-standards.md` is unchanged. 
 
+## Data Classification
+
+Before writing anything to a memory file, classify it:
+
+- **Public** — Safe to commit to the repo and share
+ broadly. Most project decisions and coding standards
+ fall here.
+
+- **Internal** — Safe within the team but not for
+ public repos. Store in a non-committed volume or
+ .gitignore the containing folder.
+
+- **Confidential** — Sensitive business data. Do not
+ store in agent memory. Retrieve from secure systems
+ on demand.
+
+- **Secret** — Credentials, tokens, API keys, PII.
+ Must never appear in any memory file. If the agent
+ encounters a secret during a run, use it for the
+ immediate task only and explicitly do not write it
+ to any memory layer. Reference the environment
+ variable name instead.
+
+### Guardrails
+
+A pre-commit hook at .git/hooks/pre-commit scans
+.memory/ for common credential patterns before each
+commit. If a pattern is found, the commit is blocked.
+
 ## Alternatives considered
 - **One combined store.** Simpler, but decisions, instructions, and source files age at different rates, so stale entries are hard to spot and remove.
 - **Copy every reference into memory.** Faster to search, but the copy can drift from the original, and the extra context costs space on every run.
