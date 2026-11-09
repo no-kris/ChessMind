@@ -90,7 +90,7 @@ The human-maintained standards in `.memory/knowledge/`. The directory holds only
 
 - **Scope:** Every session that writes, reviews, or tests code, not only drift investigations.
 - **Owner:** The human owner named in each file's `Maintained by` line. The owner created and committed both files (`8af83f0`, `2cf81d5`) and is the only one who changes their content.
-- **Write permissions:** Read-only for every agent (`CLAUDE.md`, `docs/prd-memory.md`). The `.claude/hooks/protect-memory.sh` hook enforces this for Bash commands. The Edit and Write tools rely on the `CLAUDE.md` rule. An agent that finds a wrong or outdated rule follows the `CLAUDE.md` permission-denial rule: it reports the rule, the evidence, and the exact edit it proposes in its session output, and the owner decides whether to make it.
+- **Write permissions:** Read-only for every agent (`CLAUDE.md`, `docs/prd-memory.md`). The files are set read-only on the filesystem, and whether that blocks the agent is verified only by the human-run permission tests under "Filesystem permissions". The Bash hook, the `Edit` deny rules and the `CLAUDE.md` rule are agent-side controls. An agent that finds a wrong or outdated rule follows the `CLAUDE.md` permission-denial rule: it reports the rule, the evidence, and the exact edit it proposes in its session output, and the owner decides whether to make it.
 - **Pruning policy:** The owner edits the content in a normal commit when one of the events in the table below occurs. This layer has no time-based review. The 90-day review in `MEMORY_INDEX.md` covers project-scoped entries only. After a review, the owner updates the file's `Last reviewed` date, and the main session updates the matching date on the file's line in `MEMORY_INDEX.md`. A rule is deleted when the tool, marker, command, or path it names no longer exists. A file is deleted only when repo config enforces all of its rules, and its `MEMORY_INDEX.md` line moves to Archived in the same change.
 
 **Maintenance of current content**
@@ -136,7 +136,7 @@ Source material linked from `.memory/reference/REFERENCE_MEMORY_INDEX.md`, never
 
 - **Scope:** All workflows. Query the index by keyword and read only the files the task points to.
 - **Owner:** The index is owned by the same human owner as Layer 2, who created and committed it (`ce7f94d`). The file has no `Maintained by` line. Each linked file is maintained in normal commits by whoever owns it. Of the agents, the drift-investigator writes only `docs/drift-report.md` and the position-builder writes only `backend/tests/fixtures/positions.json`. Reports, handoffs, and iteration logs are committed by the human owner.
-- **Write permissions:** Read-only to agents (`CLAUDE.md`, `docs/prd-memory.md`). The hook enforces this for Bash only, as in Layer 2. An agent that finds a stale or missing entry reports it with the proposed change, following the `CLAUDE.md` permission-denial rule, and the owner edits the index.
+- **Write permissions:** Read-only to agents (`CLAUDE.md`, `docs/prd-memory.md`). The controls and their verification are the same as in Layer 2 (see "Filesystem permissions"). An agent that finds a stale or missing entry reports it with the proposed change, following the `CLAUDE.md` permission-denial rule, and the owner edits the index.
 - **Pruning policy:** The index's own Pruning section is the implemented rule set: (1) drop an entry when its file is moved or deleted, or is no longer relevant; (2) keep an old report only while it still informs an open decision; (3) review the index whenever files are added to or removed from `docs/`. The owner updates `Last updated` after each change. The table below lists the concrete events for the current entries.
 
 **Maintenance of current content**
@@ -216,34 +216,88 @@ The next implementation slice is Phase 1 of `ai_chess_coach_project_plan.md`: an
 
 ## Filesystem permissions
 
-Recorded 2026-11-08 (22:51 UTC) inside the `dev` container, on branch `fix/memory-rubric`.
+The files in `.memory/knowledge/` and `.memory/reference/` are set read-only, inside the container:
 
-### Environment
-- `/workspace` is the repo bind mount from `docker-compose.yml` (`.:/workspace`). It is mounted **read-write** (`9p ... aname=drvfs ... metadata`). There is no `:ro` mount for any part of `.memory/`.
-- Nothing in `Dockerfile` or `docker-entrypoint.sh` sets permissions on `.memory/`. The modes below were applied by hand and are not reproducible from the repo. Git records every `.memory/` file as `100644`, does not track directory modes, and `core.fileMode` is `false`.
+```bash
+chmod 444 /workspace/.memory/knowledge/*.md /workspace/.memory/reference/*.md
+```
 
-### Applied permissions
+Captured with `find /workspace/.memory -printf '%M %m %p\n'`:
 
-Captured with `stat -c '%A %a %U:%G %n'`:
+```bash
+ -r--r--r-- 444 /workspace/.memory/knowledge/coding-standards.md
+ -r--r--r-- 444 /workspace/.memory/knowledge/testing-standards.md
+ -r--r--r-- 444 /workspace/.memory/reference/REFERENCE_MEMORY_INDEX.md
+ -rw-r--r-- 644 /workspace/.memory/SCOPE.md
+ -r--r--r-- 444 /workspace/.memory/knowledge/.gitkeep
+ -rw-r--r-- 644 /workspace/.memory/project/MEMORY_INDEX.md
+ -rw-r--r-- 644 /workspace/.memory/project/decisions/.gitkeep
+ -rw-r--r-- 644 /workspace/.memory/project/decisions/decision-001.md
+ -rw-r--r-- 644 /workspace/.memory/project/decisions/decision-002.md
+ -rw-r--r-- 644 /workspace/.memory/project/decisions/decision-003.md
+ -r--r--r-- 444 /workspace/.memory/reference/.gitkeep
+ dr-xr-xr-x 555 /workspace/.memory/knowledge
+ dr-xr-xr-x 555 /workspace/.memory/reference
+ drwxr-xr-x 755 /workspace/.memory
+ drwxr-xr-x 755 /workspace/.memory/project
+ drwxr-xr-x 755 /workspace/.memory/project/decisions
+ ```
 
-| Path | Mode | Intended |
-|---|---|---|
-| `.memory/` | `drwxr-xr-x 755` | — |
-| `.memory/knowledge/` | `dr-xr-xr-x 555` | read-only |
-| `.memory/knowledge/coding-standards.md` | `-rwxrwxrwx 777` | read-only, **but world-writable** |
-| `.memory/knowledge/testing-standards.md` | `-rwxrwxrwx 777` | read-only, **but world-writable** |
-| `.memory/knowledge/.gitkeep` | `-r--r--r-- 444` | read-only |
-| `.memory/reference/` | `dr-xr-xr-x 555` | read-only |
-| `.memory/reference/REFERENCE_MEMORY_INDEX.md` | `-rw-r--r-- 644` | read-only, but owner-writable |
-| `.memory/reference/.gitkeep` | `-r--r--r-- 444` | read-only |
-| `.memory/project/` | `drwxr-xr-x 755` | writable |
-| `.memory/project/MEMORY_INDEX.md` | `-rwxrwxrwx 777` | writable |
-| `.memory/SCOPE.md` | `-rw-r--r-- 644` | — |
+### Read-only mounts
+The agent runs as root, which mode bits do not restrict. The boundary that blocks writes is two read-only bind mounts, defined in `docker-compose.yml` (and in the `docker run` commands in `setup.md`), on top of the read-write repo mount:
+
+```yaml
+- .:/workspace
+- ./.memory/knowledge:/workspace/.memory/knowledge:ro
+- ./.memory/reference:/workspace/.memory/reference:ro
+```
+
+Inside the container, every write to these directories fails with `Read-only file system`, including writes from root. The human owner edits the files on the host, where they stay writable.
 
 ### Effect
-- The `555` directories block creating, deleting, and renaming files. They do not block edits to existing files, and the two standards files and `MEMORY_INDEX.md` are `777`.
-- The agent is prevented from modifying files in `.memory/knowledge/` and `.memory/reference/` by the `.claude/hooks/protect-memory.sh` PreToolUse hook. The hook denies any Bash command that touches those directories unless it is read-only.
+- The read-only mounts block editing existing files and creating, deleting or renaming files in both directories, for every user in the container, including root.
+- The `444` files and `555` directories are a second layer. They only restrict non-root users, and would still apply if a mount were removed.
 
+### Agent-side controls
+These are rules inside Claude Code. They lower the chance of a mistake, but they do not show that the filesystem blocks a write.
+- `.claude/hooks/protect-memory.sh` is a PreToolUse hook for **Bash only**. It denies a Bash command that names one of the two directories unless every part of it is read-only. It does not run for `Edit` or `Write`, and it only inspects the command text.
+- `.claude/settings.json` denies `Edit` on both directories. This is a Claude Code permission rule, not a filesystem permission.
+- `CLAUDE.md` tells the agent both layers are read-only.
+
+An agent declining to write (for example, "I haven't edited the file because CLAUDE.md says it is read-only") shows that it follows instructions. It is not a permission test, because no write is attempted.
+
+### Permission tests
+
+Run by a human on 11/09/2026, inside the container, as the agent's effective user.
+
+```bash
+id
+sha256sum /workspace/.memory/knowledge/coding-standards.md
+printf '' >> /workspace/.memory/knowledge/coding-standards.md; echo "modify exit=$?"
+touch /workspace/.memory/knowledge/permission-probe; echo "create exit=$?"
+ls -la /workspace/.memory/knowledge
+sha256sum /workspace/.memory/knowledge/coding-standards.md
+```
+
+Output: 
+
+```text
+uid=0(root) gid=0(root) groups=0(root)
+bb7f187b073ec1b4afd8e9db8a4908da5d8d9fd4334104a9c7e701e901155254  /workspace/.memory/knowledge/coding-standards.md
+bash: /workspace/.memory/knowledge/coding-standards.md: Read-only file system
+modify exit=1
+touch: cannot touch '/workspace/.memory/knowledge/permission-probe': Read-only file system
+create exit=1
+total 8
+dr-xr-xr-x 1 root root 4096 Nov  8 23:26 .
+drwxr-xr-x 1 root root 4096 Nov  8 23:26 ..
+-r--r--r-- 1 root root    0 Nov  8 23:26 .gitkeep
+-r--r--r-- 1 root root 1957 Nov  8 23:26 coding-standards.md
+-r--r--r-- 1 root root 1685 Nov  8 23:26 testing-standards.md
+bb7f187b073ec1b4afd8e9db8a4908da5d8d9fd4334104a9c7e701e901155254  /workspace/.memory/knowledge/coding-standards.md
+```
+
+**Conclusion:** The restriction holds for the agent's effective user (`root`). Modifying an existing file and creating a new file were both refused by the system with `Read-only file system` (exit 1), no probe file was created, and the checksum of `coding-standards.md` is unchanged. 
 
 ## Alternatives considered
 - **One combined store.** Simpler, but decisions, instructions, and source files age at different rates, so stale entries are hard to spot and remove.

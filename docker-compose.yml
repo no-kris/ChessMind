@@ -22,6 +22,8 @@ services:
       NO_PROXY: localhost,127.0.0.1,::1
     volumes:
       - .:/workspace
+      - ./.memory/knowledge:/workspace/.memory/knowledge:ro
+      - ./.memory/reference:/workspace/.memory/reference:ro
       - claude-auth:/claude-auth
       - chessmind-node-modules:/workspace/frontend/node_modules
       - chessmind-venv:/opt/venv

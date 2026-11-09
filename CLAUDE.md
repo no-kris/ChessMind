@@ -21,6 +21,16 @@ duplicates.
  that touches coding standards or architectural constraints. Never
  attempt to write to this directory.
 
+ Never change the permissions of this directory or its files on
+ your own initiative. That covers modes, ownership, attributes and
+ ACLs (chmod, chown, chgrp, chattr, setfacl and similar), and
+ mounts. The rule applies at all times, including before any
+ denial occurs: do not loosen permissions to make a write possible,
+ do not tighten or "fix" them, and do not change them to prepare
+ for a task. Only a human may change them. If the permissions look
+ wrong, report what you found and the exact change you propose,
+ and let a human make it.
+
 - .memory/reference/ — Read-only. Query by keyword for relevant
  excerpts when you need background context. Do not read the entire
  directory.
@@ -39,7 +49,8 @@ tool call, stop that action. Do not try to reach the same result
 another way: no switching tools (e.g. Edit or Write after a Bash
 denial), no rewording the command to get past the check, no
 writing a copy elsewhere and moving it into place, no git command
-that overwrites the file, and no disabling the sandbox. Never edit
+that overwrites the file, no changing file or directory
+permissions, and no disabling the sandbox. Never edit
 .claude/hooks/, .claude/settings*.json or settings.json to weaken
 a protection unless a human explicitly asks for that change.
 

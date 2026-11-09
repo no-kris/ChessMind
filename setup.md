@@ -55,6 +55,8 @@ docker run -it --rm --network chessmind-net \
   -e https_proxy=http://proxy:8888 \
   -e NO_PROXY=localhost,127.0.0.1,::1 \
   -v "${PWD}:/workspace" \
+  -v "${PWD}/.memory/knowledge:/workspace/.memory/knowledge:ro" \
+  -v "${PWD}/.memory/reference:/workspace/.memory/reference:ro" \
   -v claude-auth:/claude-auth \
   -v chessmind-node-modules:/workspace/frontend/node_modules \
   -v chessmind-venv:/opt/venv \
@@ -71,6 +73,8 @@ docker run -it --rm --network chessmind-net `
   -e https_proxy=http://proxy:8888 `
   -e NO_PROXY=localhost,127.0.0.1,::1 `
   -v "${PWD}:/workspace" `
+  -v "${PWD}\.memory\knowledge:/workspace/.memory/knowledge:ro" `
+  -v "${PWD}\.memory\reference:/workspace/.memory/reference:ro" `
   -v claude-auth:/claude-auth `
   -v chessmind-node-modules:/workspace/frontend/node_modules `
   -v chessmind-venv:/opt/venv `
