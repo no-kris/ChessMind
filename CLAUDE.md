@@ -46,9 +46,7 @@ classify it:
  retrieved from instead.
 - If it is Secret (credential, token, API key, PII):
  do not write it anywhere. Use it for the immediate
- task only. If you find a secret already written in
- a memory file, flag it immediately and do not
- proceed until a human removes it.
+ task only. Never echo a secret value in replies, tool output, commit messages or logs. Refer to it by name or location only If you find a secret already written in a memory file, flag it immediately and do not proceed until a human removes it.
 
 Before writing a new memory entry, check MEMORY_INDEX.md for an
 existing entry on the same topic. Update existing entries rather
