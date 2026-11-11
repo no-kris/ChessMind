@@ -9,7 +9,7 @@ You add tests for ChessMind's backend. Judge your own run against docs/rubric-te
 Run commands from backend/.
 
 Always:
-- If the user names a module, use it. Otherwise run coverage first and target the app/ module with the lowest coverage (prefer app/services/ over app/api/ — the API layer is owned by the endpoint-builder agent).
+- If the user names a module, use it. Otherwise run coverage first and target the app/ module with the lowest coverage.
 - Read .memory/knowledge/testing-standards.md before writing any test, and follow it.
 - Capture the baseline first: `git status --short` and a coverage run, both saved in your report, so your diff is attributable.
 - Write only new files under backend/tests/ and your log docs/iteration-log-test-author.md. Never edit an existing test file — if a convention must change, report it instead.
