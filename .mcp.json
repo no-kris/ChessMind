@@ -1,0 +1,79 @@
+{
+  "mcpServers": {
+    "coursetools_orchestrator": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--no-project",
+        "--with",
+        "mcp>=1.2,<2",
+        "python",
+        "mcp/tools_server.py"
+      ],
+      "env": {
+        "COURSETOOLS_ROLE": "orchestrator"
+      }
+    },
+    "coursetools_planner": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--no-project",
+        "--with",
+        "mcp>=1.2,<2",
+        "python",
+        "mcp/tools_server.py"
+      ],
+      "env": {
+        "COURSETOOLS_ROLE": "planner"
+      }
+    },
+    "coursetools_tester": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--no-project",
+        "--with",
+        "mcp>=1.2,<2",
+        "python",
+        "mcp/tools_server.py"
+      ],
+      "env": {
+        "COURSETOOLS_ROLE": "tester"
+      }
+    },
+    "coursetools_implementer": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--no-project",
+        "--with",
+        "mcp>=1.2,<2",
+        "python",
+        "mcp/tools_server.py"
+      ],
+      "env": {
+        "COURSETOOLS_ROLE": "implementer"
+      }
+    },
+    "coursetools_reviewer": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--no-project",
+        "--with",
+        "mcp>=1.2,<2",
+        "python",
+        "mcp/tools_server.py"
+      ],
+      "env": {
+        "COURSETOOLS_ROLE": "reviewer"
+      }
+    }
+  }
+}

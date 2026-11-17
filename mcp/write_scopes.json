@@ -1,0 +1,23 @@
+{
+  "orchestrator": [
+    {"pattern": "docs/orchestrator-runs/*/log.md", "mode": "write"}
+  ],
+  "planner": [
+    {"pattern": "docs/orchestrator-runs/*/spec.md", "mode": "write"}
+  ],
+  "tester": [
+    {"pattern": "backend/tests/**", "mode": "untracked"},
+    {"pattern": "docs/orchestrator-runs/*/red-proof.md", "mode": "write"},
+    {"pattern": "docs/orchestrator-runs/*/green-report-round-*.md", "mode": "create"},
+    {"pattern": "docs/iteration-log-test-author.md", "mode": "write"}
+  ],
+  "implementer": [
+    {"pattern": "backend/app/api/**", "mode": "untracked"},
+    {"pattern": "backend/app/services/**", "mode": "untracked"},
+    {"pattern": "docs/orchestrator-runs/*/implementer-log.md", "mode": "write"},
+    {"pattern": "docs/iteration-log-endpoint-builder.md", "mode": "write"}
+  ],
+  "reviewer": [
+    {"pattern": "docs/orchestrator-runs/*/review.md", "mode": "write"}
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "file_read": ["planner", "implementer", "reviewer", "tester", "orchestrator"],
+  "file_write": ["planner", "implementer", "reviewer", "tester", "orchestrator"],
+  "codebase_search": ["planner", "implementer", "reviewer"],
+  "git_status": ["orchestrator", "tester", "implementer", "reviewer"],
+  "test_runner": ["tester"],
+  "shell": []
+}
