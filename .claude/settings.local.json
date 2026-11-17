@@ -1,0 +1,9 @@
+{
+  "enabledMcpjsonServers": [
+    "coursetools_orchestrator",
+    "coursetools_planner",
+    "coursetools_tester",
+    "coursetools_implementer",
+    "coursetools_reviewer"
+  ]
+}
