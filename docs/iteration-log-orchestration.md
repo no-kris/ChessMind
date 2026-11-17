@@ -1,0 +1,69 @@
+# Iteration Log: TDD orchestration
+
+## Run 2026-11-17: pin-detection service
+
+**Task:** add `backend/app/services/tactics.py`, which returns every absolute
+pin for both sides of a FEN. Service module only, run through the orchestrator.
+
+**Agents:** orchestrator 1.1.0, planner 1.0.0, backend-tester 1.1.0,
+endpoint-builder 1.1.0 and reviewer 1.1.0 (definitions from `e37a35c`).
+Coordinator: Claude Code (`claude-opus-5-5`). Baseline: `main` at `c760f59`,
+96 tests passing.
+
+### What happened
+
+- **Spec (3 versions):**
+  - v1 defined `find_pins(fen) -> list[Pin]`, sorted by the pinned piece's
+    square index. An invalid FEN raises `TacticsError`. The planner raised four
+    questions for the human.
+  - The human sent v1 back with two changes. Error messages drop the
+    `find pins failed:` prefix, because the router adds it (decision-004).
+    `Pin` gains `pinned_color` and `pinned_piece`.
+  - The human sent v2 back to close coverage gaps. It added a pinned black
+    bishop and a pinned queen and a check that the prefix is absent. It renamed
+    one test and dropped a duplicate.
+  - The human approved v3 as is, leaving three cosmetic leftovers. The
+    coordinator confirmed both new FENs in python-chess.
+- **Red:** the tester wrote `backend/tests/test_tactics.py` with 11 tests and
+  27 cases. They cover:
+  - pins along ranks, files and diagonals;
+  - a pin by a queen;
+  - positions that look like pins but aren't;
+  - pins on both sides;
+  - the empty result;
+  - invalid FENs.
+
+  The run exited with code 2 on `ModuleNotFoundError`. G1 passed.
+- **Build (round 1 of 3):** the implementer wrote `tactics.py` (98 lines). For
+  each king it scans the enemy bishops, rooks and queens on a matching line. It
+  reports a pin when exactly one friendly piece stands between the king and
+  that slider.
+- **Green:** 123 passed: 27 new and 96 existing. G2 passed, with the test file
+  identical to the red-proof copy. The coordinator re-ran the suite and got the
+  same result.
+- **Review:** pass, with no blocking findings. There were four test-gap
+  findings (issue 1) and one note about the extra file the tester changed.
+
+There were no permission denials. Nothing was committed. Run files are in
+`docs/orchestrator-runs/pin-detection-2026-11-17/`.
+
+### Matched design?
+
+Mostly. The stages, gates and round budget all worked as designed. There were
+three deviations:
+
+- **Relayed approvals:** all H1 approvals reached the orchestrator through the
+  coordinator.
+- **Extra file:** the tester modified `docs/iteration-log-test-author.md`,
+  which is outside the spec's files.
+- **Weak red:** red was a single import error, so no individual assertion was
+  shown failing.
+
+### Issues and improvements
+
+**Test gaps found after the tests froze.** The code is correct on each
+   point, but the tests would miss a regression:
+   - The sort order isn't pinned down.
+   - Exception chaining isn't checked.
+   - No case has a non-sliding piece behind a blocker.
+   - No test checks that each call returns a new list.

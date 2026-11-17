@@ -44,3 +44,22 @@ Baseline coverage (`uv run pytest --cov=app --cov-report=term-missing`):
 **Final `git status --short`:** 
 - ?? backend/tests/test_engine_unit.py
 - ?? docs/iteration-log-test-author.md
+
+## Run 2026-11-17: orchestrator red stage, pin-detection-2026-11-17
+
+**Baseline** (branch `main`, HEAD `c760f59`). `git status --short` at stage start (exit 0):
+
+```
+ M backend/app/main.py
+?? docs/orchestrator-runs/
+```
+
+`main.py` change is pre-existing and human-owned (line endings); not touched. Baseline suite (`uv run pytest` via test_runner): 96 passed, exit 0. The two `test_engine.py` tests ran and passed (not skipped).
+
+**Added:** `backend/tests/test_tactics.py`. It has 11 test functions and 27 cases, covering spec v3 sections 5.1 to 5.8 with the spec's names, ids and expected values. The 5.7 test name was kept as accepted at H1 #3.
+
+**Red run:** exit 2, `ModuleNotFoundError: No module named 'app.services.tactics'` at collection, "Interrupted: 1 error during collection". This is the reason spec section 7 expects. Evidence and the full file copy are in `docs/orchestrator-runs/pin-detection-2026-11-17/red-proof.md`.
+
+**Observation (not changed):** a module-level import error interrupts the whole pytest session. So the red run collects the other 96 tests but does not run them, and their status rests on the baseline run. The rubric's "not an import error" wording targets test-side typos. Here the spec names a missing production module as the expected red reason.
+
+**Files written:** `backend/tests/test_tactics.py` (new), `docs/orchestrator-runs/pin-detection-2026-11-17/red-proof.md` (new), this log entry. No refused tool calls.
