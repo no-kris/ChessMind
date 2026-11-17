@@ -1,6 +1,6 @@
 # Project Memory Index
 
-Last updated: 2026-11-08
+Last updated: 2026-11-17
 
 ## Active entries
 
@@ -22,7 +22,7 @@ Last updated: 2026-11-08
  UCI-only moves (castling normalised to e1g1), every error `detail` a
  string (422 included) reading "<operation> failed: <problem>", `move_id` = 0-based ply index, uuid4-hex game ids.
  Error rule: services raise domain errors and only routers map them
- to HTTP. Recorded 2026-11-05 (agent choice, unreviewed).
+ to HTTP. Recorded 2026-11-05; user-confirmed 2026-11-17.
  Review by 2027-02-03.
 
 - `decisions/decision-005.md` — The game store is a process-local
@@ -47,6 +47,28 @@ Last updated: 2026-11-08
  app INFO logs were silently dropped under uvicorn. Don't use
  `logging.basicConfig` (it does nothing under pytest). Recorded
  2026-11-06. Review by 2027-02-04.
+
+- `decisions/decision-008.md` — Orchestration round budget: still-red
+ green runs, reviewer rejects and verifier failures share one limit of
+ 3 implementer builds per run (first build = round 1); round 3 still
+ red, rejected or failed → escalate to the human and stop. Every build
+ re-runs the green stage and G2. User-confirmed 2026-11-17.
+ Review by 2027-02-15.
+
+- `decisions/decision-009.md` — Verifier is a subagent
+ (`.claude/agents/verifier.md`) with `file_read`, `git_status` and
+ `test_runner` only, no write tools; frontend checks via `test_runner`
+ `suite: "verify"` (`npm run lint` + `npm run build`). Rules stay in the
+ verifier skill, which humans keep for pre-commit. FAIL → implementer
+ (shared round budget); BLOCKED or PENDING → human, run stops, no round
+ used. User-confirmed
+ 2026-11-17. Review by 2027-02-15.
+
+- `decisions/decision-010.md` — coursetools MCP: one server per role
+ (`coursetools_<role>` in `.mcp.json`, role fixed by COURSETOOLS_ROLE,
+ no `role` argument); per-role write scopes in `mcp/write_scopes.json`;
+ `mcp` pinned <2. Main session still sees all six servers.
+ Recorded 2026-11-17. Review by 2027-02-15.
 
 - `../knowledge/coding-standards.md` — Coding standards
  for this project. Human-maintained, read-only.
