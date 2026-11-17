@@ -5,8 +5,9 @@
 **Status:** Active. User-requested 2026-11-17 ("fix the self-declared role gap"); design chosen by the agent.
 
 **Decision:**
-- `.mcp.json` registers six servers, `coursetools_<role>` for orchestrator,
-  planner, tester, implementer, reviewer and verifier. Each runs
+- `.mcp.json` registers five servers, `coursetools_<role>` for orchestrator,
+  planner, tester, implementer and reviewer (the verifier server was removed
+  2026-11-17, [decision-009](decision-009.md)). Each runs
   `mcp/tools_server.py` with `COURSETOOLS_ROLE=<role>`.
 - No tool takes a `role` argument. The server refuses to start without a
   known role. Each agent's frontmatter grants only
@@ -27,7 +28,7 @@
 - The `untracked` mode exists because a create-only rule would block the
   implementer from revising its own files in loop rounds.
 
-**Limits:** The human's main session sees all six servers and can call any of
+**Limits:** The human's main session sees all five servers and can call any of
 them. Only subagents are restricted. Freezing `red-proof.md` after G1 and
 "current run only" are still instructions.
 

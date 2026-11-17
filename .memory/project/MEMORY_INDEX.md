@@ -49,25 +49,24 @@ Last updated: 2026-11-17
  2026-11-06. Review by 2027-02-04.
 
 - `decisions/decision-008.md` — Orchestration round budget: still-red
- green runs, reviewer rejects and verifier failures share one limit of
- 3 implementer builds per run (first build = round 1); round 3 still
- red, rejected or failed → escalate to the human and stop. Every build
+ green runs and reviewer rejects share one limit of 3 implementer
+ builds per run (first build = round 1); round 3 still red or
+ rejected → escalate to the human and stop. Every build
  re-runs the green stage and G2. User-confirmed 2026-11-17.
  Review by 2027-02-15.
 
-- `decisions/decision-009.md` — Verifier is a subagent
- (`.claude/agents/verifier.md`) with `file_read`, `git_status` and
- `test_runner` only, no write tools; frontend checks via `test_runner`
- `suite: "verify"` (`npm run lint` + `npm run build`). Rules stay in the
- verifier skill, which humans keep for pre-commit. FAIL → implementer
- (shared round budget); BLOCKED or PENDING → human, run stops, no round
- used. User-confirmed
- 2026-11-17. Review by 2027-02-15.
+- `decisions/decision-009.md` — No verifier stage and no lint
+ requirement: verifier agent, MCP role and `/verifier` skill deleted;
+ `test_runner` runs pytest only (no ruff); the tester's green run also
+ runs `npm run build` (`suite: "build"`) when frontend files changed.
+ Knowledge standards still require ruff (human to update).
+ User-decided 2026-11-17 (reversed the earlier verifier-agent design).
+ Review by 2027-02-15.
 
 - `decisions/decision-010.md` — coursetools MCP: one server per role
  (`coursetools_<role>` in `.mcp.json`, role fixed by COURSETOOLS_ROLE,
  no `role` argument); per-role write scopes in `mcp/write_scopes.json`;
- `mcp` pinned <2. Main session still sees all six servers.
+ `mcp` pinned <2. Main session still sees all five servers.
  Recorded 2026-11-17. Review by 2027-02-15.
 
 - `../knowledge/coding-standards.md` — Coding standards

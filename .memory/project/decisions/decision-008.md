@@ -1,8 +1,13 @@
-# Decision 008 - Reviewer rejects and verifier failures share one 3-round budget
+# Decision 008 - Still-red runs and reviewer rejects share one 3-round budget
 
 **Date:** 2026-11-17
 **Review by:** 2027-02-15
 **Status:** Active. User-confirmed 2026-11-17 ("share the limit").
+
+**Update 2026-11-17:** the verifier stage was removed
+([decision-009](decision-009.md)). The budget is now shared by still-red
+green runs and reviewer rejects only. Mentions of the verifier, verifier
+FAILs and `.claude/skills/verifier/SKILL.md` below are historical.
 
 **Decision:** In a TDD orchestration run, a round is one implementer
 (endpoint-builder) build, and the first build is round 1. A still-red green
