@@ -1,6 +1,6 @@
 # Project Memory Index
 
-Last updated: 2026-11-17
+Last updated: 2026-11-18
 
 ## Active entries
 
@@ -68,6 +68,12 @@ Last updated: 2026-11-17
  no `role` argument); per-role write scopes in `mcp/write_scopes.json`;
  `mcp` pinned <2. Main session still sees all five servers.
  Recorded 2026-11-17. Review by 2027-02-15.
+
+- `decisions/decision-011.md` — Phase 5 `POST /api/coach/explain`
+ `{game_id, move_id}` → `{verdict, praise, concern, tip}` from
+ templates only (no LLM/cache yet). 422/404/404/503 codes, alerts
+ `own_piece_pinned`/`opponent_piece_pinned`, move_id takeback reuse
+ accepted for now. User-confirmed 2026-11-17. Review by 2027-02-16.
 
 - `../knowledge/coding-standards.md` — Coding standards
  for this project. Human-maintained, read-only.
