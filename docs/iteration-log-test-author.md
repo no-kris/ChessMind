@@ -63,3 +63,25 @@ Baseline coverage (`uv run pytest --cov=app --cov-report=term-missing`):
 **Observation (not changed):** a module-level import error interrupts the whole pytest session. So the red run collects the other 96 tests but does not run them, and their status rests on the baseline run. The rubric's "not an import error" wording targets test-side typos. Here the spec names a missing production module as the expected red reason.
 
 **Files written:** `backend/tests/test_tactics.py` (new), `docs/orchestrator-runs/pin-detection-2026-11-17/red-proof.md` (new), this log entry. No refused tool calls.
+
+## Run 2026-11-17/18: orchestrator red stage, coach-explain-2026-11-17
+
+**Baseline** (branch `feat/pin-detection`, HEAD `8fb58d1`). `git status --short` at stage start (exit 0):
+
+```
+?? docs/orchestrator-runs/coach-explain-2026-11-17/
+```
+
+Baseline suite (test_runner, `uv run pytest`): 123 passed, exit 0. The two `test_engine.py` tests ran and passed, so STOCKFISH_PATH is set. `backend/app/main.py` was left unchanged, per the human's constraint.
+
+**Added:** `backend/tests/test_coach.py` (77 cases), `backend/tests/test_position_analysis.py` (7), `backend/tests/test_coach_api.py` (16). They cover every test name in spec sections 5.1 to 5.3. None needs Stockfish, and none carries the engine or llm mark.
+
+**Design choice:** the new production modules are imported at call time (`importlib.import_module`), not at module level. The previous run showed that one module-level ModuleNotFoundError interrupts the whole session. That would hide the API tests' 404 failures and the existing suite's result. With lazy imports, the red run collects and runs everything. The `test_coach_api.py` autouse fixture installs the dependency override only once `app.services.position_analysis` exists, and it tolerates only that exact missing module.
+
+**Red run:** exit 1, 100 failed, 123 passed. The service tests fail with `ModuleNotFoundError` for `app.services.coach` and `app.services.position_analysis`. The API tests fail on `assert 404 == ...` or on `'explain move failed' in 'Not Found'`. Evidence and full file copies are in `docs/orchestrator-runs/coach-explain-2026-11-17/red-proof.md`.
+
+**Spec deviations reported (not hidden):**
+- Spec section 4 writes the override as `= fake`. The tests use `= lambda: fake` because FastAPI calls the override to get the value.
+- The OSError test uses a realistic FileNotFoundError that carries the path. It asserts that the path is absent from the message (spec 2.1), so the implementer cannot use `str(exc)` as `{reason}`.
+
+**Files written:** the three test files above (new), `red-proof.md` (new), this log entry. No refused tool calls.

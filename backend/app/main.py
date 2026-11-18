@@ -7,6 +7,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from app.api.coach import router as coach_router
 from app.api.games import router as games_router
 from app.api.routes import router
 
@@ -79,6 +80,7 @@ async def validation_error_handler(request: Request, exc: RequestValidationError
 
 app.include_router(router)
 app.include_router(games_router)
+app.include_router(coach_router)
 
 
 @app.get("/")
